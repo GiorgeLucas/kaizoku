@@ -1,4 +1,5 @@
 from typing import Any, Union
+from urllib import parse
 from urllib.parse import parse_qs, urlparse
 
 from bs4 import BeautifulSoup
@@ -10,6 +11,7 @@ from providers.base_provider import BaseProvider
 from providers.common import Language
 
 from .common import headers
+import re
 
 
 class AnimesDigital(BaseProvider):
@@ -19,7 +21,8 @@ class AnimesDigital(BaseProvider):
     language = Language.PT_BR
 
     def parse_anime_name(self, raw_anime_name: str):
-        return raw_anime_name.lower().replace(" ", "+")
+        parsed = re.sub(r'[^a-zA-Z0-9]+', '+', raw_anime_name)
+        return parsed
 
     def get_episode_video_url(self, episode: Episode) -> Union[dict[str, Any], None]:
         page_link = episode.page_link

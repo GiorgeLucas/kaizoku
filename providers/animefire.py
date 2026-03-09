@@ -10,6 +10,8 @@ from providers.exceptions import ExceptionSearchingNetworkError
 
 from .common import headers
 
+import re
+
 class Animefire(BaseProvider):
     title = "Animefire"
     color = "fg:#21D3FF bold"
@@ -17,7 +19,8 @@ class Animefire(BaseProvider):
     language = Language.PT_BR
 
     def parse_anime_name(self, raw_anime_name: str):
-        return raw_anime_name.lower().replace(" ", "-")
+        parsed = re.sub(r'[^a-zA-Z0-9]+', '-', raw_anime_name).lower().strip("-")
+        return parsed
 
     def get_episode_video_url(self, episode: Episode) -> Union[dict[str, Any], None]:
         page_link = episode.page_link
