@@ -8,16 +8,16 @@ from ui.kaizoku_app import KaizokuApp
 from utils.system import clear
 
 def no_animes_found():
-    print("No animes found!")
+    print("No animes found")
     questionary.press_any_key_to_continue().ask()
 
 
 def episode_not_working():
-    print("This episode from this provider is not working. Try another one")
+    print("This episode isn't available. Try another.")
     questionary.press_any_key_to_continue().ask()
 
 def no_episodes_list():
-    print("This anime doesnt have episodes list. Try another one")
+    print("No episodes found for this anime.")
     questionary.press_any_key_to_continue().ask()
 
 
@@ -103,8 +103,8 @@ def main():
             continue
 
         clear()
-        print(f"Selected Anime: {anime.title}")
-        print(f"Selected Episode: {episode.title}")
+        print(f"Anime: {anime.title}")
+        print(f"Episode: {episode.title}")
 
         final_url = SearchManager.get_episode_url(episode)
         if final_url is not None:

@@ -8,6 +8,19 @@ class KaizokuApp(App):
             background: transparent;
         }}
 
+        Toast {{
+            background: transparent;
+            border: round ansi_green;
+        }}
+
+        ModalScreen {{
+            align: center middle;
+        }}
+
+        LoadingIndicator {{
+            color: ansi_white;
+        }}
+
         Vertical, Horizontal, Container {{
             background: transparent;
             border: round ansi_green;

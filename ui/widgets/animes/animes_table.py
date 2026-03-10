@@ -4,7 +4,14 @@ from textual.widgets import DataTable
 
 
 class AnimesTableContainer(Container):
-    BORDER_TITLE = "Animes List"
+    BORDER_TITLE = "Anime List"
+
+    DEFAULT_CSS = """
+        #animes_list > .datatable--hover {
+            background: ansi_white;
+            color: ansi_black;
+        }
+    """
 
     def compose(self) -> ComposeResult:
         yield DataTable(id="animes_list", cursor_type="row")
