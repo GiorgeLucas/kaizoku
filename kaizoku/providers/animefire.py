@@ -21,9 +21,7 @@ class Animefire(BaseProvider):
     def _fetch_anime_results_html(self, anime_name: str) -> str:
         parsed_anime_name = self._parse_anime_name(anime_name)
         search_url = f"{self.base_url}/pesquisar/{parsed_anime_name}"
-        response = requests.get(search_url, headers=headers)
-        response.raise_for_status()
-        return response.text
+        return self._fetch_html(search_url)
 
     def _parse_anime_name(self, raw_anime_name: str) -> str:
         parsed = re.sub(r"[^a-zA-Z0-9]+", "-", raw_anime_name).lower().strip("-")
@@ -41,13 +39,8 @@ class Animefire(BaseProvider):
         return Anime(anime_title, link, self)
 
     def search_episodes(self, anime: Anime) -> list[Episode]:
-        response_text = self._fetch_episodes_results_html(anime)
+        response_text = self._fetch_html(anime.page_link)
         return self._parse_episodes_from_html(response_text, anime)
-
-    def _fetch_episodes_results_html(self, anime: Anime) -> str:
-        response = requests.get(anime.page_link, headers=headers)
-        response.raise_for_status()
-        return response.text
 
     def _parse_episodes_from_html(self, html: str, anime: Anime) -> list[Episode]:
         soup = BeautifulSoup(html, "html.parser")

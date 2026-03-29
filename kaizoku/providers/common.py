@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
 from enum import Enum
 
+import requests
+
 from kaizoku.core.anime import Anime, Episode
 
 headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
@@ -33,3 +35,8 @@ class BaseProvider(ABC):
     @abstractmethod
     def get_play_options(self, episode: Episode) -> dict[str, str]:
         pass
+
+    def _fetch_html(self, url: str) -> str:
+        response = requests.get(url, headers=headers)
+        response.raise_for_status()
+        return response.text
